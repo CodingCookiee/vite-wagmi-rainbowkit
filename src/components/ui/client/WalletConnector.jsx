@@ -1,10 +1,20 @@
-
+import { useState, useEffect } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Button } from "../common";
+import { Button, Text } from "../common";
+import { useAccount } from "wagmi";
 
-export function WalletConnector({ className, showAccountInfo = true }) {
+export function WalletConnector({ className }) {
+  const { isConnected } = useAccount();
+  const [showAccountInfo, setShowAccountInfo] = useState(false);
 
-
+  // Update showAccountInfo when connection state changes
+  useEffect(() => {
+    if (isConnected) {
+      setShowAccountInfo(true);
+    } else {
+      setShowAccountInfo(false);
+    }
+  }, [isConnected]);
 
   return (
     <ConnectButton.Custom>
@@ -56,11 +66,14 @@ export function WalletConnector({ className, showAccountInfo = true }) {
                     !showAccountInfo ? "flex items-center" : ""
                   }`}
                 >
-                  {showAccountInfo ? (
+                  {showAccountInfo && (
                     <>
-                      <p className="text-green-600 dark:text-green-400 mb-2">
+                      <Text
+                        align="center"
+                        className="text-green-600 dark:text-green-400 mb-2"
+                      >
                         ✓ Wallet Connected
-                      </p>
+                      </Text>
                       <div className="flex flex-col space-y-3">
                         <Button
                           variant="outline"
@@ -111,23 +124,6 @@ export function WalletConnector({ className, showAccountInfo = true }) {
                         </Button>
                       </div>
                     </>
-                  ) : (
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        try {
-                          openAccountModal();
-                        } catch (error) {
-                          console.error("Error opening account modal:", error);
-                        }
-                      }}
-                      type="button"
-                      size="sm"
-                      className="flex items-center gap-2"
-                    >
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      {account.displayName}
-                    </Button>
                   )}
                 </div>
               );

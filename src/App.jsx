@@ -1,10 +1,10 @@
 import { useAccount } from "wagmi";
-import { Text } from "./components/ui/common";
+import { Text, Button } from "./components/ui/common";
 import { WalletConnector } from "./components/ui/client/WalletConnector";
 import { MessageSigner } from "./components/ui/client/MessageSigner";
 
 function App() {
-  const { isConnected } = useAccount();
+  const isConnected = useAccount();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-gray-900 dark:to-indigo-950">
@@ -23,10 +23,10 @@ function App() {
             NFT Nexus
           </Text>
         </div>
-        {/* Small connect button in header */}
-        <div className="hidden sm:block">
+        {/* Header wallet display - compact version */}
+        {/* <div className="hidden sm:block">
           <WalletConnector showAccountInfo={false} />
-        </div>
+        </div> */}
       </header>
 
       <main className="container mx-auto p-4 mt-10">
@@ -38,18 +38,17 @@ function App() {
             variant="body"
             className="text-gray-600 dark:text-gray-300 mb-6"
           >
-            {isConnected 
-              ? "Authenticate your wallet to access exclusive features" 
+            {isConnected
+              ? "Authenticate your wallet to access exclusive features"
               : "Connect your wallet to get started exploring your NFT portfolio and the marketplace."}
           </Text>
-
           <div className="w-full flex flex-col items-center justify-center gap-6">
-            {/* {!isConnected && ( */}
-              <div className="w-full flex items-center justify-center">
-                <WalletConnector />
-              </div>
-            {/* )} */}
+            {/* Main wallet connect/display area */}
+            <div className="w-full flex items-center justify-center">
+              <WalletConnector />
+            </div>
 
+            {/* Message signer component */}
             <div className="w-full">
               <MessageSigner />
             </div>

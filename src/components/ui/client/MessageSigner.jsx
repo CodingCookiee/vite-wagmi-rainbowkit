@@ -1,6 +1,3 @@
-
-
-import { getIronSession } from "iron-session";
 import { useState, useCallback, useEffect } from "react";
 import { CheckCheck } from "lucide-react";
 import { useSignMessage, useVerifyMessage, useAccount } from "wagmi";
@@ -157,14 +154,7 @@ export function MessageSigner() {
     setStatus("idle");
     setSignature("");
     setErrorText("");
-
-    // Generate a new message with a fresh nonce
-    if (address) {
-      const nonce = generateNonce();
-      const message = `Sign this message to authenticate with NFT Nexus\n\nWallet: ${address}\nNonce: ${nonce}\nTimestamp: ${new Date().toISOString()}\n\nNo gas fees or blockchain transactions will be initiated by this action.`;
-      setAuthMessage(message);
-    }
-  }, [address]);
+  }, []);
 
   // If no wallet is connected
   if (!address) {
