@@ -151,9 +151,9 @@ export function MessageSigner() {
   // Handle sign out
   const handleSignOut = useCallback(() => {
     localStorage.removeItem("auth-session");
-    
-     // Clear RainbowKit cache specifically 
-     localStorage.removeItem("rk-recent");
+
+    // Clear RainbowKit cache specifically
+    //  localStorage.removeItem("rk-recent");
     setStatus("idle");
     setSignature("");
     setErrorText("");
