@@ -13,35 +13,35 @@ import {
   sepolia,
 } from "wagmi/chains";
 
-// Use environment variables for sensitive data
-const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
-
-// Select chain based on environment
-const chainId = parseInt(import.meta.env.VITE_CHAIN_ID || "1");
-const availableChains = [mainnet, polygon, optimism, arbitrum, base, sepolia];
-
-export const config = getDefaultConfig({
-  appName: "RainbowKit NFT Nexus",
-  projectId: projectId,
-  chains: availableChains,
-  transports: {
-    [mainnet.id]: http(
-      `https://eth-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_ID}`
-    ),
-    [sepolia.id]: http(
-      import.meta.env.VITE_RPC_URL || "https://eth-sepolia.public.blastapi.io"
-    ),
-    [polygon.id]: http(),
-    [optimism.id]: http(),
-    [arbitrum.id]: http(),
-    [base.id]: http(),
-  },
-  ssr: false, // Since we're using Vite, not Next.js
-});
-
+// Create a new query client instance
 const queryClient = new QueryClient();
 
 export function Web3Provider({ children }) {
+  // Check for project ID
+  const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID;
+
+  // Create configuration after validating project ID
+  const config = getDefaultConfig({
+    appName: "NFT Nexus",
+    projectId: projectId,
+    chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
+    transports: {
+      [mainnet.id]: http(
+        `https://eth-mainnet.g.alchemy.com/v2/${
+          import.meta.env.VITE_ALCHEMY_ID || ""
+        }`
+      ),
+      [sepolia.id]: http(
+        import.meta.env.VITE_RPC_URL || "https://eth-sepolia.public.blastapi.io"
+      ),
+      [polygon.id]: http(),
+      [optimism.id]: http(),
+      [arbitrum.id]: http(),
+      [base.id]: http(),
+    },
+    ssr: false,
+  });
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>

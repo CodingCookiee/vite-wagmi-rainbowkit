@@ -8,7 +8,7 @@ import App from "./App";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Web3Provider>
-      <App />
+      <App/>
     </Web3Provider>
   </StrictMode>
 );
