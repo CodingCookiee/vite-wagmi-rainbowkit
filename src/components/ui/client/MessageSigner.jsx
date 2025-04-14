@@ -86,6 +86,7 @@ export function MessageSigner({ onAuthStateChange }) {
     // Clear session data
     clearSession();
     resetAuth();
+    
   }, [clearSession, resetAuth]);
 
   // If no wallet is connected
