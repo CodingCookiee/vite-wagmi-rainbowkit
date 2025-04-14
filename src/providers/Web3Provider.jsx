@@ -39,7 +39,6 @@ export function Web3Provider({ children }) {
       [arbitrum.id]: http(),
       [base.id]: http(),
     },
-    ssr: false,
   });
 
   return (
