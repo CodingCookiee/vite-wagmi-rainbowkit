@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import { injected, metaMask, coinbaseWallet,  walletConnect } from '@wagmi/connectors'
 import "@rainbow-me/rainbowkit/styles.css";
 import { http } from "wagmi";
 import {
@@ -24,10 +25,36 @@ export function Web3Provider({ children }) {
   const config = getDefaultConfig({
     appName: "NFT Nexus",
     projectId: projectId,
+    chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
+    // shimDisconnect: true, 
+
     // preference: { 
     //   options: 'all'
-    // },   
-    chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
+    // }, 
+    // connectors: [
+    //   injected(),
+    //   coinbaseWallet({
+    //     appName: 'NFT Nexus',
+    //     appLogoUrl: '/favicon.png', 
+    //   }),
+    //   metaMask({
+    //     dappMetadata: { 
+    //       name: 'NFT Nexus', 
+    //       url: 'http://localhost:5173/', 
+    //       iconUrl: '/favicon.png', 
+    //     }
+    //   }),
+    // ], 
+    // connectors:[
+    //   walletConnect({
+    //     projectId: projectId,
+    //     metadata: { 
+    //       name: 'NFT Nexus', 
+    //       description: 'NFT Nexus - Your NFT Dashboard & Marketplace', 
+    //       url: 'http://localhost:5173/', 
+    //     }, 
+    //   }) 
+    // ],
     transports: {
       [mainnet.id]: http(
         `https://eth-mainnet.g.alchemy.com/v2/${
