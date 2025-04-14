@@ -1,11 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-const ReadContract = () => {
-    return (
-        <div>
-            Read Contract
-        </div>
-    );
+export default function ReadContract() {
+  return (
+    <div>ReadContract</div>
+  )
 }
-
-export default ReadContract;

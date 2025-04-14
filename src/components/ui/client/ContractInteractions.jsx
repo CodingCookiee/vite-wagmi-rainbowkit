@@ -1,17 +1,13 @@
 import React from 'react';
+import ReadContract from './ReadContract';
+import WriteContract from './WriteContract';
+import { Text } from '../common'
 
 const ContractInteractions = () => {
     return (
         <div>
-            <h1>Contract Interactions</h1>
-            <p>This section will contain various contract interactions.</p>
-            <div className="flex flex-col gap-4">
-                {/* Add your components here */}
-                {/* <ReadContract /> */}
-                {/* <WriteContract /> */}
-                {/* <MessageSigner /> */}
-                {/* <WalletConnector /> */}
-            </div>
+            <Text>Contract Interactions</Text>
+            
         </div>
     );
 }
