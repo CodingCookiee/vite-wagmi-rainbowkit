@@ -24,6 +24,9 @@ export function Web3Provider({ children }) {
   const config = getDefaultConfig({
     appName: "NFT Nexus",
     projectId: projectId,
+    // preference: { 
+    //   options: 'all'
+    // },   
     chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
     transports: {
       [mainnet.id]: http(
