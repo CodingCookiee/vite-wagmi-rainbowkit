@@ -2,14 +2,13 @@ import { useAccount } from "wagmi";
 import { Text, Button } from "../ui/common";
 import { WalletConnector } from "../ui/client/WalletConnector";
 import { MessageSigner } from "../ui/client/MessageSigner";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function Main() {
   const isConnected = useAccount();
 
   return (
     <div className="min-h-screen">
-     
       <main className="container mx-auto p-4 mt-10">
         <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg">
           <Text variant="h3" className="text-2xl font-bold mb-4">
@@ -34,18 +33,12 @@ function Main() {
               <MessageSigner />
             </div>
 
-            <div className="">
-              <Text>
-                Go to Contract Interactions
-              </Text>
-              <Link to='/contract-interaction'>
-              <Button
-              variant='link'>
-                Contract Interaction
-                </Button>
+            <div className="flex flex-col items-center justify-center">
+              <Text variant="h3">Go to Contract Interactions</Text>
+              <Link to="/contract-interaction">
+                <Button variant="link">Contract Interaction</Button>
               </Link>
             </div>
-
           </div>
         </div>
       </main>
