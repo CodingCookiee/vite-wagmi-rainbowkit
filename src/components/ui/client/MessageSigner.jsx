@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useCallback } from "react";
 import { CheckCheck } from "lucide-react";
 import { useAccount } from "wagmi";
@@ -16,9 +14,9 @@ import {
 import { useSignMessageAuth } from "@/utils/useSignMessageAuth";
 import { useVerifyMessageAuth } from "@/utils/useVerifyMessageAuth";
 
-export function MessageSigner() {
+export function MessageSigner({ onAuthStateChange }) {
   const { address } = useAccount();
-  
+
   // Use our custom hooks
   const {
     authMessage,
@@ -32,7 +30,7 @@ export function MessageSigner() {
     resetAuth,
     setStatus: setSignStatus,
   } = useSignMessageAuth();
-  
+
   const {
     verificationStatus,
     verificationError,
@@ -40,21 +38,29 @@ export function MessageSigner() {
     verifySignature,
     clearSession,
   } = useVerifyMessageAuth();
-  
+
   // Combined status for UI display
-  const status = verificationStatus === "success" 
-    ? "success" 
-    : verificationStatus === "verifying" || isVerifying 
-      ? "verifying" 
+  const status =
+    verificationStatus === "success"
+      ? "success"
+      : verificationStatus === "verifying" || isVerifying
+      ? "verifying"
       : signStatus;
-  
+
   const errorText = verificationError || signErrorText;
+
+  // Notify parent component about auth state changes
+  useEffect(() => {
+    if (onAuthStateChange) {
+      onAuthStateChange(status);
+    }
+  }, [status, onAuthStateChange]);
 
   // Initialize message and check for existing session when address changes
   useEffect(() => {
     if (address) {
       const existingSession = checkExistingSession(address);
-      
+
       if (existingSession) {
         setSignStatus("success");
       } else {
@@ -80,7 +86,6 @@ export function MessageSigner() {
     // Clear session data
     clearSession();
     resetAuth();
-    
   }, [clearSession, resetAuth]);
 
   // If no wallet is connected
@@ -154,7 +159,12 @@ export function MessageSigner() {
           <>
             <Button
               onClick={handleAuthenticate}
-              disabled={isSignPending || status === "verifying" || !authMessage || status === "signing"}
+              disabled={
+                isSignPending ||
+                status === "verifying" ||
+                !authMessage ||
+                status === "signing"
+              }
               className="w-full"
             >
               {status === "signing"
