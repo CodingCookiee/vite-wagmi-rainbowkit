@@ -446,6 +446,8 @@ export const WriteContract = ({
               {isTransferringFrom ? "Transferring..." : "Transfer From"}
             </Button>
           </div>
+          <Divider className="w-full h-1 bg-neutral-300" />
+
           {/* Transfer Section */}
           <div className="flex flex-col items-start gap-2.5 w-full">
             <Text variant="h4" weight="semibold" align="left">
