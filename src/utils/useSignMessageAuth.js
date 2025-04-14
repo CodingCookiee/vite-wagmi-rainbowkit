@@ -11,7 +11,7 @@ export function useSignMessageAuth() {
   const [status, setStatus] = useState("idle"); // idle, signing, signed, error
   const [errorText, setErrorText] = useState("");
 
-  // Use wagmi's sign message hook
+  // wagmi's sign message hook
   const {
     signMessage,
     data: signature,
@@ -24,7 +24,7 @@ export function useSignMessageAuth() {
   // Generate authentication message for a given address
   const generateAuthMessage = useCallback((address) => {
     if (!address) return "";
-    
+
     const nonce = generateNonce();
     const message = `Sign this message to authenticate with NFT Nexus
 
@@ -39,29 +39,32 @@ No gas fees or blockchain transactions will be initiated by this action.`;
   }, []);
 
   // Request signature for the current message
-  const requestSignature = useCallback(async (message) => {
-    setErrorText("");
-    setStatus("signing");
-    
-    try {
-      await signMessage({ message: message || authMessage });
-      setStatus("signed");
-      return true;
-    } catch (error) {
-      console.error("Error signing message:", error);
-      setErrorText(error.message || "Failed to sign message");
-      setStatus("error");
-      return false;
-    }
-  }, [authMessage, signMessage]);
+  const requestSignature = useCallback(
+    async (message) => {
+      setErrorText("");
+      setStatus("signing");
+
+      try {
+        await signMessage({ message: message || authMessage });
+        setStatus("signed");
+        return true;
+      } catch (error) {
+        console.error("Error signing message:", error);
+        setErrorText(error.message || "Failed to sign message");
+        setStatus("error");
+        return false;
+      }
+    },
+    [authMessage, signMessage]
+  );
 
   // Check for existing session
   const checkExistingSession = useCallback((address) => {
     if (!address) return null;
-    
+
     const storedSession = localStorage.getItem("auth-session");
     if (!storedSession) return null;
-    
+
     try {
       const session = JSON.parse(storedSession);
       if (
@@ -97,13 +100,13 @@ No gas fees or blockchain transactions will be initiated by this action.`;
     isSignPending,
     isSignError,
     signError,
-    
+
     // Actions
     generateAuthMessage,
     requestSignature,
     checkExistingSession,
     resetAuth,
-    
+
     // Internal setters (for advanced use)
     setAuthMessage,
     setStatus,
